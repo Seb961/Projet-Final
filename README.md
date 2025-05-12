@@ -12,7 +12,7 @@ Le tout est orchestré dans un namespace Kubernetes `icgroup`, avec persistance 
 ---
 
 ## 🛠️ Technologies utilisées
-- Kubernetes (Minikube / k3s)
+- Kubernetes (K3S)
 - Docker (pour les images personnalisées)
 - Odoo 15 (image officielle)
 - PostgreSQL 13 (image officielle)
