@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo
+  namespace: icgroup
+  labels:
+    app: odoo
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+        env: prod
+    spec:
+      securityContext:
+        fsGroup: 1000
+      initContainers:
+        - name: wait-for-postgres
+          image: busybox
+          command: ['sh', '-c', 'until nc -z postgres.icgroup.svc.cluster.local 5432; do echo "Waiting for postgres..."; sleep 2; done']
+      containers:
+        - name: odoo
+          image: odoo:15
+          args: ["-d", "odoo", "-i", "base", "--without-demo=all"]
+          securityContext:
+            runAsUser: 0
+          env:
+            - name: HOST
+              value: postgres.icgroup.svc.cluster.local
+            - name: USER
+              value: odoo
+            - name: PASSWORD
+              value: odoo
+          ports:
+            - containerPort: 8069
+          volumeMounts:
+            - mountPath: /var/lib/odoo
+              name: odoo-storage
+      volumes:
+        - name: odoo-storage
+          persistentVolumeClaim:
+            claimName: odoo-pvc
+

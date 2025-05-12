@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: icgroup
+  labels:
+    app: postgres
+    env: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        env: prod
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:13
+          env:
+            - name: POSTGRES_USER
+              value: odoo
+            - name: POSTGRES_PASSWORD
+              value: odoo
+            - name: POSTGRES_DB
+              value: odoo
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-pv
+      volumes:
+        - name: postgres-pv
+          persistentVolumeClaim:
+            claimName: postgres-pvc
+
