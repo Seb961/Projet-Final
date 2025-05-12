@@ -144,8 +144,13 @@ Les services sont exposés via `NodePort` pour permettre l'accès externe depuis
 ### 8. Accès aux applications
 Après déploiement, les services sont accessibles à l'adresse IP du nœud du cluster + le port :
 - http://<IP>:30069 pour Odoo
+![odoo](https://github.com/user-attachments/assets/de6f6192-f22e-4fcc-ad60-8568d30a913a)
+  
 - http://<IP>:30080 pour pgAdmin
+![pgAdmin](https://github.com/user-attachments/assets/d90c11e2-bbc9-480d-ba52-3fa9de7895af)
+
 - http://<IP>:30081 pour le site vitrine
+![icGroup](https://github.com/user-attachments/assets/6f4468d0-080a-45ba-a548-57cec43d9e26)
 
 ---
 
